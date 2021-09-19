@@ -1,36 +1,34 @@
 import pytest
 from selenium import webdriver
 
+from oxwall_helper import OxwallApp
+
 
 @pytest.fixture()
 def driver():
     dr = webdriver.Chrome()
-    dr.implicitly_wait(3)
+    # dr.implicitly_wait(3)
     dr.get("https://demo.oxwall.com/")  # "http://localhost/oxwall"
     yield dr
     dr.quit()
 
 
-def user():
-    d = {"username": "demo",   # "admin"
-         "password": "demo"}   # "pass"
-    return
+@pytest.fixture()
+def app(driver):
+    app = OxwallApp(driver)
+    return app
 
 
 @pytest.fixture()
-def sign_in_user(driver, user):
-    # Sign in
-    el = driver.find_element_by_class_name("ow_signin_label")
-    el.click()
-    # el_submit = dr.find_element_by_id("input_iqaqewaj")
-    el_name = driver.find_element_by_name("identity")
-    el_name.clear()
-    el_name.send_keys(user["username"])
-    el_pass = driver.find_element_by_name("password")
-    el_pass.clear()
-    el_pass.send_keys(user["password"])
-    el_confirm = driver.find_element_by_name("submit")
-    el_confirm.click()
+def user():
+    d = {"username": "demo",   # "admin"
+         "password": "demo"}   # "pass"
+    return d
+
+
+@pytest.fixture()
+def sign_in_user(driver, user, app):
+    app.sign_in(user)
     yield user
-    # TODO: Sing out
+    app.sign_out()
 
