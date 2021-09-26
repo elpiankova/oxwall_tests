@@ -1,5 +1,3 @@
-from locators import SIGN_IN_MENU
-from page_objects.base_page import Page
 from page_objects.internal_page import InternalPage
 
 

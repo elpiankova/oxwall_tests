@@ -3,6 +3,8 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 
+from page_objects.locators import CommonPageLocators
+
 
 class Page:
     """ Base Page Class that aggregate common actions on Oxwall pages """
@@ -10,6 +12,10 @@ class Page:
         self.driver = driver
         self.wait = WebDriverWait(self.driver, 3)
         self.actions = ActionChains(self.driver)
+
+    @property
+    def message(self):
+        return self.find_element(CommonPageLocators.MESSAGE)
 
     def is_element_present(self, locator):
         try:

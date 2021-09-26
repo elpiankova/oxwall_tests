@@ -3,7 +3,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.common.by import By
 from custom_wait_conditions import presence_of_N_elements_located
-from locators import SIGN_IN_MENU, DASHOBORD_MENU, USERNAME_FIELD, PASSWORD_FIELD, SIGN_IN_BUTTON
+from page_objects.locators import InternalPagesLocators, SignInPageLocators
 
 
 class OxwallApp:
@@ -18,19 +18,19 @@ class OxwallApp:
         Sign in with user
         parameters: user as a dictionary object
         """
-        el = self.driver.find_element(*SIGN_IN_MENU)
+        el = self.driver.find_element(*InternalPagesLocators.SIGN_IN_MENU)
         el.click()
         # el_submit = dr.find_element_by_id("input_iqaqewaj")
-        el_name = self.driver.find_element(*USERNAME_FIELD)
+        el_name = self.driver.find_element(*SignInPageLocators.USERNAME_FIELD)
         el_name.clear()
         el_name.send_keys(user["username"])
-        el_pass = self.driver.find_element(*PASSWORD_FIELD)
+        el_pass = self.driver.find_element(*SignInPageLocators.PASSWORD_FIELD)
         el_pass.clear()
         el_pass.send_keys(user["password"])
-        el_confirm = self.driver.find_element(*SIGN_IN_BUTTON)
+        el_confirm = self.driver.find_element(*SignInPageLocators.SIGN_IN_BUTTON)
         el_confirm.click()
         wait = WebDriverWait(self.driver, 3)
-        wait.until(ec.presence_of_element_located(DASHOBORD_MENU))
+        wait.until(ec.presence_of_element_located(InternalPagesLocators.DASHBOARD_MENU))
 
     def sign_out(self):
         # sign out

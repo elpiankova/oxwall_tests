@@ -1,7 +1,13 @@
+import json
+
 import pytest
 from selenium import webdriver
+import os.path
 
 from oxwall_helper import OxwallApp
+from page_objects.main_page import MainPage
+
+PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
 
 
 @pytest.fixture()
@@ -19,16 +25,28 @@ def app(driver):
     return app
 
 
-@pytest.fixture()
-def user():
-    d = {"username": "demo",   # "admin"
-         "password": "demo"}   # "pass"
+user_filename = os.path.join(PROJECT_DIR, "data", "user_data.json")
+with open(user_filename) as f:
+    user_list = json.load(f)
+
+
+@pytest.fixture(params=user_list, ids=[str(d) for d in user_list])
+def user(request):
+    d = request.param
     return d
 
 
 @pytest.fixture()
-def sign_in_user(driver, user, app):
-    app.sign_in(user)
-    yield user
-    app.sign_out()
+def default_user():
+    d = {"username": "demo",
+         "password": "demo"}
+    return d
+
+
+@pytest.fixture()
+def sign_in_user(driver, default_user, app):
+    main_page = MainPage(driver)
+    main_page.sign_in(default_user)
+    yield default_user
+    main_page.sign_out()
 
