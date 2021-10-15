@@ -8,8 +8,8 @@ def test_sign_in_using_sign_in_button(driver, user):
     # assert main_page.el_page_title.text == "fdgd"
     main_page.click_sign_in()
     sign_in_page = SignInPage(driver)
-    sign_in_page.input_username(user["username"])
-    sign_in_page.input_password(user["password"])
+    sign_in_page.input_username(user.username)
+    sign_in_page.input_password(user.password)
     sign_in_page.click_sign_in_button()
     assert "info" in sign_in_page.message.get_attribute("class").split()
     assert sign_in_page.message.text == "AUTHENTICATION SUCCESS, PLEASE WAIT..."
@@ -21,8 +21,8 @@ def test_sign_in_using_submit(driver, user):
     main_page = MainPage(driver)
     main_page.click_sign_in()
     sign_in_page = SignInPage(driver)
-    sign_in_page.input_username(user["username"])
-    sign_in_page.input_password(user["password"])
+    sign_in_page.input_username(user.username)
+    sign_in_page.input_password(user.password)
     sign_in_page.submit()
     assert "info" in sign_in_page.message.get_attribute("class").split()
     assert sign_in_page.message.text == "Authentication success, please wait..."
@@ -32,7 +32,7 @@ def test_sign_in_without_password(driver, user):
     main_page = MainPage(driver)
     main_page.click_sign_in()
     sign_in_page = SignInPage(driver)
-    sign_in_page.input_username(user["username"])
+    sign_in_page.input_username(user.username)
     sign_in_page.input_password('')
     sign_in_page.click_sign_in_button()
     assert "error" in sign_in_page.message().get_attribute("class").split()
