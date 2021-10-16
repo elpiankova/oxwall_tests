@@ -1,3 +1,5 @@
+import pytest
+
 from page_objects.dashboard_page import DashboardPage
 from page_objects.main_page import MainPage
 from page_objects.sign_in_page import SignInPage
@@ -17,6 +19,7 @@ def test_sign_in_using_sign_in_button(driver, user):
     assert dashboard_page.el_page_title.text == "MY DASHBOARD"
 
 
+@pytest.mark.smoke
 def test_sign_in_using_submit(driver, user):
     main_page = MainPage(driver)
     main_page.click_sign_in()

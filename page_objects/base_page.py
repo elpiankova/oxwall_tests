@@ -39,6 +39,11 @@ class Page:
                              message=f"No visible element with locator='{locator}'")
         return el
 
+    def find_one_visible_element_of_any_located(self, locator):
+        els = self.wait.until(ec.visibility_of_any_elements_located(locator),
+                              message=f"No elements visible with locators {locator}")
+        return els[0]
+
     def find_clickable_element(self, locator):
         el = self.wait.until(ec.element_to_be_clickable(locator),
                              message=f"No clickable element with locator='{locator}'")

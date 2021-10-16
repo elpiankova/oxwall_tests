@@ -15,13 +15,13 @@ def oxwall_hash(password):
 
 
 class OxwallDB:
-    def __init__(self):
+    def __init__(self, host, user, password, database):
         # Connect to the database
-        self.connection = pymysql.connect(host='localhost',
-                                             user='root',
-                                             password='mysql',
-                                             database='oxwall1',
-                                             cursorclass=pymysql.cursors.DictCursor)
+        self.connection = pymysql.connect(host=host,
+                                          user=user,
+                                          password=password,
+                                          database=database,
+                                          cursorclass=pymysql.cursors.DictCursor)
         self.connection.autocommit(True)
 
     def close(self):

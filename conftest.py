@@ -12,18 +12,33 @@ from value_objects import User
 PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
 
 
+def pytest_addoption(parser):
+    parser.addoption("--config", action="store", default="config.json",
+                     help="project config file name")
+    # parser.addoption("--browser", action="store", default="Chrome",
+    #                  help="driver")
+
+
+@pytest.fixture(scope="session")
+def config(request):
+    filename = request.config.getoption("--config")
+    with open(os.path.join(PROJECT_DIR, filename)) as f:
+        return json.load(f)
+
+
 @pytest.fixture()
-def driver():
-    dr = webdriver.Chrome()
+def driver(config, selenium, base_url):
+    dr = selenium
     # dr.implicitly_wait(3)
-    dr.get("http://localhost/oxwall")  # "https://demo.oxwall.com/"
+    # dr.get(config["web"]["base_url"])  # "https://demo.oxwall.com/"
+    dr.get(base_url)
     yield dr
     dr.quit()
 
 
 @pytest.fixture(scope="session")
-def db():
-    db = OxwallDB()
+def db(config):
+    db = OxwallDB(**config["db"])
     yield db
     db.close()
 
@@ -48,11 +63,8 @@ def user(request, db):
 
 
 @pytest.fixture()
-def default_user():
-    d = {"username": "admin",
-         "password": "pass",
-         "real_name": "Admin"}
-    user = User(**d)
+def default_user(config):
+    user = User(**config["web"]["user"])
     return user
 
 

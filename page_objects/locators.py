@@ -35,3 +35,9 @@ class PostBlockLocators:
     POST_TIME = (By.CSS_SELECTOR, "a.create_time.ow_newsfeed_date")
     LIKES_BUTTON = (By.CSS_SELECTOR, ".ow_miniic_like.newsfeed_like_btn")
     LIKES_COUNTER = (By.CSS_SELECTOR, ".newsfeed_counter_likes")
+
+
+class JoinPageLocators:
+    USERNAME = (By.CSS_SELECTOR, ".ow_username_validator")
+    PASSWORD = ()
+

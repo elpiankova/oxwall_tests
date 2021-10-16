@@ -22,8 +22,8 @@ class InternalPage(Page):
     def sign_in(self, user):
         self.click_sign_in()
         sign_in_page = SignInPage(self.driver)
-        sign_in_page.input_username(user["username"])
-        sign_in_page.input_password(user["password"])
+        sign_in_page.input_username(user.username)
+        sign_in_page.input_password(user.password)
         sign_in_page.click_sign_in_button()
 
     def photo_menu_click(self):

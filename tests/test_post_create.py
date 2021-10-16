@@ -14,6 +14,8 @@ with open(filename, encoding="utf-8") as f:
 post_data_list.append(random_string(enter=True))
 
 
+@pytest.mark.smoke
+@pytest.mark.nondestructive
 @pytest.mark.parametrize("input_text", post_data_list)
 def test_create_post(driver, sign_in_user, input_text, db):
     # input_text = "new post typing"
